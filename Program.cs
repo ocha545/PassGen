@@ -14,7 +14,7 @@ class Program
 	{
 		const string defaultExclusion = "\"\'";
 		string exclusionChars = "";
-		int generatePassCount = 1;
+		int generatePassCount = 0;
 		int generatePassLength = 16;
 		if(args.Length == 0)
 		{
@@ -69,12 +69,6 @@ class Program
 				}
 				else if (char.ToUpper(currentArg[1]) == 'H' || char.ToUpper(currentArg[1]) == '?')
 				{
-					WriteLineUsage();
-					return;
-				}
-				else
-				{
-					Console.WriteLine("無効なオプションが指定されたか、引数が足りません");
 					WriteLineUsage();
 					return;
 				}
@@ -143,3 +137,4 @@ class Program
 // 											生成するパスワードの数を指定します。
 //   -L|--length 	<string>[default: 16]	Specify the number of characters for the generated password.
 // 											生成するパスワードの文字数を指定します。
+//  dotnet publish -c Release -r win-x64 -o "..\binary\PassGen\"
