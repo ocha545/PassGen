@@ -16,6 +16,11 @@ class Program
 		string exclusionChars = "";
 		int generatePassCount = 1;
 		int generatePassLength = 16;
+		if(args.Length == 0)
+		{
+			Console.WriteLine("ヘルプが必要なときは--helpオプションを付けて実行してください");
+			return;
+		}
 
 		for (int i = 0; i < args.Length; i++)
 		{
@@ -29,16 +34,22 @@ class Program
 					{
 						exclusionChars = args[i + 1];
 					}
-					if (currentArg.Substring(2).ToLower() == "count" && (i + 1) < args.Length)
+					else if (currentArg.Substring(2).ToLower() == "count" && (i + 1) < args.Length)
 					{
 						generatePassCount = int.Parse(args[i + 1]);
 					}
-					if (currentArg.Substring(2).ToLower() == "length" && (i + 1) < args.Length)
+					else if (currentArg.Substring(2).ToLower() == "length" && (i + 1) < args.Length)
 					{
 						generatePassLength = int.Parse(args[i + 1]);
 					}
-					if (currentArg.Substring(2).ToLower() == "help")
+					else if (currentArg.Substring(2).ToLower() == "help")
 					{
+						WriteLineUsage();
+						return;
+					}
+					else
+					{
+						Console.WriteLine("無効なオプションが指定されました");
 						WriteLineUsage();
 						return;
 					}
@@ -48,16 +59,22 @@ class Program
 				{
 					exclusionChars = args[i + 1];
 				}
-				if (char.ToUpper(currentArg[1]) == 'C' && (i + 1) < args.Length)
+				else if (char.ToUpper(currentArg[1]) == 'C' && (i + 1) < args.Length)
 				{
 					generatePassCount = int.Parse(args[i + 1]);
 				}
-				if (char.ToUpper(currentArg[1]) == 'L' && (i + 1) < args.Length)
+				else if (char.ToUpper(currentArg[1]) == 'L' && (i + 1) < args.Length)
 				{
 					generatePassLength = int.Parse(args[i + 1]);
 				}
-				if (char.ToUpper(currentArg[1]) == 'H' || char.ToUpper(currentArg[1]) == '?')
+				else if (char.ToUpper(currentArg[1]) == 'H' || char.ToUpper(currentArg[1]) == '?')
 				{
+					WriteLineUsage();
+					return;
+				}
+				else
+				{
+					Console.WriteLine("無効なオプションが指定されたか、引数が足りません");
 					WriteLineUsage();
 					return;
 				}
