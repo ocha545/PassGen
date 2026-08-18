@@ -50,7 +50,10 @@ class Program
 					else
 					{
 						Console.WriteLine("無効なオプションが指定されました");
-						WriteLineUsage();
+						Console.WriteLine("以下のオプションでヘルプを確認し、オプションが正しいか確認してください");
+						Console.WriteLine("PassGen /?");
+						Console.WriteLine("PassGen /H");
+						Console.WriteLine("PassGen --help");
 						return;
 					}
 				}
