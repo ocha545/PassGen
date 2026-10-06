@@ -56,6 +56,7 @@ class Program
 					else if (currentArg.Substring(2).ToLower() == "version")
 					{
 						Console.WriteLine("PassGen Version: " + VERSION);
+						return;
 					}
 					else if (currentArg.Substring(2).ToLower() == "help")
 					{
@@ -193,6 +194,8 @@ class Program
 		Console.WriteLine("                               生成するパスワードの数を指定します。");
 		Console.WriteLine("  -L|--length  [default: 16]   Specify the number of characters for the generated password.");
 		Console.WriteLine("                               生成するパスワードの文字数を指定します。");
+		Console.WriteLine("  -O|--output　　　　　　　　　　　　　　　　　　Outputs the generated password to a file.");
+		Console.WriteLine("                               生成するパスワードをファイルに出力します。");
 		Console.WriteLine("  -V|--version                 Displays the version.");
 		Console.WriteLine("                               バージョンを表示します");
 		Console.WriteLine("  -H|--help                    Displays help.");
