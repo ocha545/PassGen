@@ -42,6 +42,11 @@ class Program
 					{
 						generatePassLength = int.Parse(args[i + 1]);
 					}
+
+					else if (currentArg.Substring(2).ToLower() == "version")
+					{
+						Console.WriteLine("PassGen Version: 1.0.1");
+					}
 					else if (currentArg.Substring(2).ToLower() == "help")
 					{
 						WriteLineUsage();
@@ -70,6 +75,10 @@ class Program
 				{
 					generatePassLength = int.Parse(args[i + 1]);
 				}
+				else if(char.ToUpper(currentArg[1]) == 'V')
+				{
+					Console.WriteLine("PassGen Version: 1.0.1");
+				}
 				else if (char.ToUpper(currentArg[1]) == 'H' || char.ToUpper(currentArg[1]) == '?')
 				{
 					WriteLineUsage();
@@ -90,7 +99,7 @@ class Program
 			{
 				pass.Append(RandomChar(minRange, maxRange, defaultExclusion + exclusionChars));
 			}
-			Console.WriteLine("[info] Gen Pass! \"" + pass.ToString() + "\"");
+			Console.WriteLine(pass.ToString());
 		}
 	}
 
@@ -119,6 +128,10 @@ class Program
 		Console.WriteLine("                               生成するパスワードの数を指定します。");
 		Console.WriteLine("  -L|--length  [default: 16]   Specify the number of characters for the generated password.");
 		Console.WriteLine("                               生成するパスワードの文字数を指定します。");
+		Console.WriteLine("  -V|--version                 Displays the version.");
+		Console.WriteLine("                               バージョンを表示します");
+		Console.WriteLine("  -H|--help                    Displays help.");
+		Console.WriteLine("                               ヘルプを表示します");
 	}
 }
 #pragma warning restore CA1862
