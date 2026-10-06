@@ -47,7 +47,6 @@ class Program
 					{
 						generatePassLength = int.Parse(args[i + 1]);
 					}
-
 					else if (currentArg.Substring(2).ToLower() == "version")
 					{
 						Console.WriteLine("PassGen Version: " + VERSION);

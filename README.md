@@ -1,5 +1,7 @@
-# PassGen Ver0.0.1
+# PassGen Ver 1.0.1.1
 パスワードを生成するコマンドです
+文字数の指定や、使わない文字を指定することが出来ます。
+(標準でダブルクオーテーション(")とシングルクォーテーション(')を無効にしています)
 
 # 出来ること
 - パスワードを生成する数の指定
@@ -12,7 +14,6 @@
 - ``dotnet publish -c Release -r linux-x64``　や、
 - ``dotnet publish -c Release -r osx-x64`` などでビルドします
 - ビルドされたファイルは、``bin/Release/net10.0/publish``ディレクトリに出力されます
-
 
 # 使い方
 - ``PassGen --help`` または ``PassGen /?``などでヘルプを表示します
