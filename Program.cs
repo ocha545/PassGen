@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Reflection;
 
 #pragma warning disable IDE0090
 #pragma warning disable IDE0057
@@ -9,6 +10,7 @@ class Program
 {
 	readonly static int SEED = ((DateTime.Now.Microsecond & 65533) << 8) | (DateTime.Now.Millisecond & 65533);
 	readonly static Random RNG = new Random(SEED);
+	readonly static string VERSION = Assembly.GetExecutingAssembly().GetName().Version!.ToString();
 
 	public static void Main(string[] args)
 	{
@@ -16,9 +18,12 @@ class Program
 		string exclusionChars = "";
 		int generatePassCount = 0;
 		int generatePassLength = 16;
-		if(args.Length == 0)
+		if (args.Length == 0)
 		{
-			Console.WriteLine("ヘルプが必要なときは--helpオプションを付けて実行してください");
+			Console.WriteLine("PassGen Version: " + VERSION + " !");
+			Console.WriteLine("Copyright (C) 2026 ocha--. All rights reserved.");
+			Console.WriteLine("このコマンドでは文字数指定や、除外する文字の指定を行い、パスワードを生成することが出来ます。");
+			Console.WriteLine("詳しいコマンドは　PassGen　--help を実行し、ご確認ください。");
 			return;
 		}
 
@@ -45,7 +50,7 @@ class Program
 
 					else if (currentArg.Substring(2).ToLower() == "version")
 					{
-						Console.WriteLine("PassGen Version: 1.0.1");
+						Console.WriteLine("PassGen Version: " + VERSION);
 					}
 					else if (currentArg.Substring(2).ToLower() == "help")
 					{
@@ -54,11 +59,8 @@ class Program
 					}
 					else
 					{
-						Console.WriteLine("無効なオプションが指定されました");
-						Console.WriteLine("以下のオプションでヘルプを確認し、オプションが正しいか確認してください");
-						Console.WriteLine("PassGen /?");
-						Console.WriteLine("PassGen /H");
-						Console.WriteLine("PassGen --help");
+						Console.WriteLine("無効なオプションが指定されました: " + currentArg.Substring(2).ToLower());
+						Console.WriteLine("ヘルプを確認して正しいオプションを指定してください");
 						return;
 					}
 				}
@@ -75,9 +77,9 @@ class Program
 				{
 					generatePassLength = int.Parse(args[i + 1]);
 				}
-				else if(char.ToUpper(currentArg[1]) == 'V')
+				else if (char.ToUpper(currentArg[1]) == 'V')
 				{
-					Console.WriteLine("PassGen Version: 1.0.1");
+					Console.WriteLine("PassGen Version: " + VERSION);
 				}
 				else if (char.ToUpper(currentArg[1]) == 'H' || char.ToUpper(currentArg[1]) == '?')
 				{
