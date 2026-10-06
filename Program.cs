@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Reflection;
 
@@ -16,6 +17,7 @@ class Program
 	{
 		const string defaultExclusion = "\"\'";
 		string exclusionChars = "";
+		string outputFilepath = string.Empty;
 		int generatePassCount = 0;
 		int generatePassLength = 16;
 		if (args.Length == 0)
@@ -47,6 +49,10 @@ class Program
 					{
 						generatePassLength = int.Parse(args[i + 1]);
 					}
+					else if (currentArg.Substring(2).ToLower() == "output")
+					{
+						outputFilepath = args[i + 1];
+					}
 					else if (currentArg.Substring(2).ToLower() == "version")
 					{
 						Console.WriteLine("PassGen Version: " + VERSION);
@@ -76,6 +82,10 @@ class Program
 				{
 					generatePassLength = int.Parse(args[i + 1]);
 				}
+				else if (char.ToUpper(currentArg[1]) == 'O' && (i + 1) < args.Length)
+				{
+					outputFilepath = args[i + 1];
+				}
 				else if (char.ToUpper(currentArg[1]) == 'V')
 				{
 					Console.WriteLine("PassGen Version: " + VERSION);
@@ -92,6 +102,8 @@ class Program
 		// 使って良い文字列は、数字・アルファベット・除外されていない記号 のみ(日本語や変形したローマ字などは無効)
 		const char minRange = '!';
 		const char maxRange = '~';
+
+		StringBuilder allPass = new StringBuilder("");
 		for (int pgi = 0; pgi < generatePassCount; pgi++)
 		{
 			// 取り敢えず16文字
@@ -100,7 +112,59 @@ class Program
 			{
 				pass.Append(RandomChar(minRange, maxRange, defaultExclusion + exclusionChars));
 			}
-			Console.WriteLine(pass.ToString());
+
+			allPass.AppendLine(pass.ToString());
+		}
+
+		if (outputFilepath == string.Empty)
+		{
+			Console.WriteLine(allPass.ToString());
+		}
+		else
+		{
+			WritePassFile(outputFilepath, allPass.ToString());
+		}
+	}
+
+	public static void WritePassFile(string path, string passwords)
+	{
+		if (File.Exists(path))
+		{
+			Console.WriteLine("同じファイルが見つかったので以下の選択肢から操作を選択してください");
+			Console.WriteLine("追記する(a) 上書きする(o) 中止する(s)");
+			Console.Write(" > ");
+			string input = Console.ReadLine() ?? string.Empty;
+			if (input == "a")
+			{
+				using StreamWriter sw = new StreamWriter(path, true, Encoding.UTF8);
+				sw.WriteLine(passwords);
+				sw.Flush();
+				Console.WriteLine("追記を行います");
+			}
+			else if (input == "o")
+			{
+				using StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8);
+				sw.WriteLine(passwords);
+				sw.Flush();
+				Console.WriteLine("上書きします");
+			}
+			else if (input == "s")
+			{
+				Console.WriteLine("中止します");
+				return;
+			}
+			else
+			{
+				Console.WriteLine("操作が選択されなかったか、無効な操作が選択されました");
+				Console.WriteLine("a, o, s　のいずれかを選択してください");
+			}
+		}
+		else
+		{
+			using StreamWriter sw = new StreamWriter(path, true, Encoding.UTF8);
+			sw.WriteLine(passwords);
+			sw.Flush();
+			return;
 		}
 	}
 
